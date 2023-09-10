@@ -1,0 +1,8 @@
+name = "PhyloCoEvo"
+uuid = "3e721199-7f35-4abc-9dee-50e9c9dfbe3d"
+authors = ["Jack <jarbus@tutanota.com>"]
+version = "0.1.0"
+
+[deps]
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
+LRUCache = "8ac3fa9e-de4c-5943-b1dc-09c6b5f20637"
