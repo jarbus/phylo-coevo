@@ -1,3 +1,6 @@
 module PhyloCoEvo
 
-end # module PhyloCoEvo
+include("structs.jl")
+include("distances.jl")
+
+end 
