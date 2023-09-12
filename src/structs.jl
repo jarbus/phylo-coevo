@@ -16,8 +16,8 @@ abstract type AbstractPhylogeneticTree end
 Id = Int32
 InteractionOutcome = Float32
 Distance = Float32
-MatchUp = NTuple{N,Id} where N
-InteractionCache = LRU{MatchUp, InteractionOutcome} where N
+MatchUp = NTuple{NumPops,Id} where NumPops
+InteractionCache = LRU{MatchUp{NumPops}, InteractionOutcome} where NumPops
 
 struct AdditiveInteractionDistanceMetric <: AbstractInteractionDistanceMetric end
 
@@ -27,8 +27,6 @@ mutable struct AsexualPhylogeneticTree
     dist_cache::LRU{Tuple{Id,Id}, Distance} where N
     AsexualPhylogeneticTree() = new(Id(0), Vector{Id}(), LRU{Tuple{Id,Id}, Distance}(maxsize=1000))
 end
-
-
 
 struct Population{T}
     individuals::Dict{Id,T}
@@ -41,6 +39,7 @@ end
     datetime::DateTime
     cur_gen::Int=1
     max_gens::Int
-    populations::Vector{Population{IndType}}
-    interaction_cache::InteractionCache{NumPops}
+    pop_size::Int
+    populations::Vector{Population{IndType}}=Vector{Population{IndType}}()
+    interaction_cache::InteractionCache{NumPops}=InteractionCache{NumPops}()
 end
