@@ -20,6 +20,7 @@ MatchUp = NTuple{NumPops,Id} where NumPops
 InteractionCache = LRU{MatchUp{NumPops}, InteractionOutcome} where NumPops
 
 struct AdditiveInteractionDistanceMetric <: AbstractInteractionDistanceMetric end
+struct AllVersusAllMatchupSampler <: AbstractMatchupSampler end
 
 mutable struct AsexualPhylogeneticTree
     cur_idx::Id
@@ -42,4 +43,5 @@ end
     pop_size::Int
     populations::Vector{Population{IndType}}=Vector{Population{IndType}}()
     interaction_cache::InteractionCache{NumPops}=InteractionCache{NumPops}(maxsize=2000)
+    matchup_sampler::AbstractMatchupSampler=AllVersusAllMatchupSampler()
 end

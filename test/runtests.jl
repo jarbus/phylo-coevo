@@ -5,3 +5,4 @@ using Test
 include("creation.jl")
 include("distances.jl")
 include("domains/ng.jl")
+include("samplers.jl")
