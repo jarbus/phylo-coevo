@@ -16,7 +16,11 @@
                 max_gens=100,
                 pop_size=100,
                 populations=pops,
-                interaction_cache=i_cache)
+                interaction_cache=i_cache,
+                matchup_sampler=AllVersusAllMatchupSampler(),
+                interaction_distance_metric=AdditiveInteractionDistanceMetric(),
+                fitness_estimator=PhylogeneticFitnessEstimator(),
+                selection_method=FitnessProportionateSelection())
     end
     @testset "add/rm_individuals" begin
         # Add a parent and a child, then delete the parent
@@ -44,7 +48,13 @@
                 description="test",
                 datetime=now(), 
                 max_gens=100,
-                pop_size=100)
+                pop_size=100,
+                matchup_sampler=AllVersusAllMatchupSampler(),
+                interaction_distance_metric=AdditiveInteractionDistanceMetric(),
+                fitness_estimator=PhylogeneticFitnessEstimator(),
+                selection_method=FitnessProportionateSelection())
+
+
         PhyloCoEvo.init_pops!(exp)
         @test length(exp.populations) == 2
         @test length(exp.populations[1].individuals) == 100
