@@ -1,5 +1,3 @@
-function choose_interactions(ex::Experiment)
-end
 function evaluate!(ex::Experiment, matchup::MatchUp)
     get!(ex.interaction_cache, matchup) do
         inds = [ex.populations[i].individuals[matchup[i]] for i in eachindex(matchup)]
