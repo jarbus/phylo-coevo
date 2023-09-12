@@ -14,6 +14,7 @@
                 description="test",
                 datetime=now(), 
                 max_gens=100,
+                pop_size=100,
                 populations=pops,
                 interaction_cache=i_cache)
     end
