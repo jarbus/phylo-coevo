@@ -41,5 +41,5 @@ end
     max_gens::Int
     pop_size::Int
     populations::Vector{Population{IndType}}=Vector{Population{IndType}}()
-    interaction_cache::InteractionCache{NumPops}=InteractionCache{NumPops}()
+    interaction_cache::InteractionCache{NumPops}=InteractionCache{NumPops}(maxsize=2000)
 end
