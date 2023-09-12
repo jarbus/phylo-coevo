@@ -1,13 +1,24 @@
 using PhyloCoEvo
+using Dates
 using Test
 
 @testset "Constructors" begin
     id = Int32(1)
     pid = Int32(1)
-    NG_Individual(id, pid, (1.0, 2.0, 3.0))
-    AsexualPhylogeneticTree()
-    InteractionCache{2}(maxsize=2000)
-    Population{NG_Individual{3}}(Vector{NG_Individual{3}}(), AsexualPhylogeneticTree())
+    ng_ind  = NG_Individual(id, pid, (1.0, 2.0, 3.0))
+    pt      = AsexualPhylogeneticTree()
+    i_cache = InteractionCache{2}(maxsize=2000)
+    inds    = Dict(id=>ng_ind)
+    pop     = Population{NG_Individual{3}}(inds, pt)
+    pops    = [pop, pop]
+
+    exp = Experiment{NG_Individual{3}, 2}(
+            name="test",
+            description="test",
+            datetime=now(), 
+            max_gens=100,
+            populations=pops,
+            interaction_cache=i_cache)
 end
 
 @testset "Distances" begin
@@ -29,4 +40,3 @@ end
         @test RelativeDistance(Id(10),Id(7), pt, threshold=Distance(2)) === nothing
     end
 end
-

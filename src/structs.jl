@@ -3,7 +3,7 @@ using LRUCache
 
 export AbstractIndividual, AbstractInteractionDistanceMetric,
        AbstractFitnessEstimator, AbstractMatchupSampler,
-       NG_Individual, AsexualPhylogeneticTree, InteractionCache,
+       AsexualPhylogeneticTree, InteractionCache,
        Population, Experiment, Id, InteractionOutcome, Distance
 
 abstract type AbstractIndividual end
@@ -13,16 +13,13 @@ abstract type AbstractMatchupSampler end
 abstract type AbstractSelectionMethod end
 abstract type AbstractPhylogeneticTree end
 
-
 Id = Int32
 InteractionOutcome = Float32
 Distance = Float32
+MatchUp = NTuple{N,Id} where N
+InteractionCache = LRU{MatchUp, InteractionOutcome} where N
 
-struct NG_Individual{N} <: AbstractIndividual where N <: Int
-    id::Id
-    pid::Id
-    genome::NTuple{N, Float64}
-end
+struct AdditiveInteractionDistanceMetric <: AbstractInteractionDistanceMetric end
 
 mutable struct AsexualPhylogeneticTree
     cur_idx::Id
@@ -31,19 +28,19 @@ mutable struct AsexualPhylogeneticTree
     AsexualPhylogeneticTree() = new(Id(0), Vector{Id}(), LRU{Tuple{Id,Id}, Distance}(maxsize=1000))
 end
 
-struct AdditiveInteractionDistanceMetric <: AbstractInteractionDistanceMetric end
 
-InteractionCache = LRU{NTuple{N,Id}, InteractionOutcome} where N
 
 struct Population{T}
-    individuals::Vector{T}
+    individuals::Dict{Id,T}
     phylogeny::AsexualPhylogeneticTree
 end
 
-struct Experiment{IndType,NumPops}
+@kwdef mutable struct Experiment{IndType,NumPops}
     name::String
     description::String
     datetime::DateTime
+    cur_gen::Int=1
+    max_gens::Int
     populations::Vector{Population{IndType}}
     interaction_cache::InteractionCache{NumPops}
 end
