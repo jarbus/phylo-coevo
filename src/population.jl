@@ -1,4 +1,4 @@
-export add_individual!, rm_individual!, init_population, Population
+export add_individual!, rm_individual!, Population
 
 function Population{T}() where T
     Population{T}(Dict{Id,T}(), AsexualPhylogeneticTree())

@@ -33,10 +33,22 @@
         @test pop.phylogeny.tree == [Id(0), Id(1)]
     end
     @testset "init_population" begin
-        pop = init_population(NG_Individual{3},10)
+        pop = PhyloCoEvo.init_population(NG_Individual{3},10)
         @test length(pop.individuals) == 10
         @test pop.phylogeny.cur_idx == 10
         @test pop.phylogeny.tree == [Id(0), Id(0), Id(0), Id(0), Id(0), Id(0), Id(0), Id(0), Id(0), Id(0)]
+    end
+    @testset "init_pops" begin
+        exp = Experiment{NG_Individual{3}, 2}(
+                name="test",
+                description="test",
+                datetime=now(), 
+                max_gens=100,
+                pop_size=100)
+        PhyloCoEvo.init_pops!(exp)
+        @test length(exp.populations) == 2
+        @test length(exp.populations[1].individuals) == 100
+        @test length(exp.populations[2].individuals) == 100
     end
 end
 
