@@ -9,18 +9,7 @@
         pop     = Population{NG_Individual{3}}(inds, pt)
         pops    = [pop, pop]
 
-        exp = Experiment{NG_Individual{3}, 2}(
-                name="test",
-                description="test",
-                datetime=now(), 
-                max_gens=100,
-                pop_size=100,
-                populations=pops,
-                interaction_cache=i_cache,
-                matchup_sampler=AllVersusAllMatchupSampler(),
-                interaction_distance_metric=AdditiveInteractionDistanceMetric(),
-                fitness_estimator=PhylogeneticFitnessEstimator(),
-                selection_method=FitnessProportionateSelection())
+        exp = Experiment100()
     end
     @testset "add/rm_individuals" begin
         # Add a parent and a child, then delete the parent
@@ -43,18 +32,7 @@
         @test pop.phylogeny.tree == [Id(0), Id(0), Id(0), Id(0), Id(0), Id(0), Id(0), Id(0), Id(0), Id(0)]
     end
     @testset "init_pops" begin
-        exp = Experiment{NG_Individual{3}, 2}(
-                name="test",
-                description="test",
-                datetime=now(), 
-                max_gens=100,
-                pop_size=100,
-                matchup_sampler=AllVersusAllMatchupSampler(),
-                interaction_distance_metric=AdditiveInteractionDistanceMetric(),
-                fitness_estimator=PhylogeneticFitnessEstimator(),
-                selection_method=FitnessProportionateSelection())
-
-
+        exp = Experiment100()
         PhyloCoEvo.init_pops!(exp)
         @test length(exp.populations) == 2
         @test length(exp.populations[1].individuals) == 100
