@@ -21,6 +21,15 @@ Distance = Float32
 MatchUp = NTuple{NumPops,Id} where NumPops
 InteractionCache = LRU{MatchUp{NumPops}, InteractionOutcome} where NumPops
 
+struct DualInteractionMatrix
+    # Datastructure for storing the estimates and ground
+    # truths interactions between two populations
+    id_map_row::Dict{Id,Int}
+    id_map_col::Dict{Id,Int}
+    evaluated::Matrix{InteractionOutcome}
+    predicted::Matrix{InteractionOutcome}
+    is_prediction::Matrix{Bool}
+end
 struct AdditiveInteractionDistanceMetric <: AbstractInteractionDistanceMetric end
 struct AllVersusAllMatchupSelector <: AbstractMatchupSelector end
 struct PhylogeneticFitnessEstimator <: AbstractFitnessEstimator end
