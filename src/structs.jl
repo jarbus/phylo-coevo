@@ -2,16 +2,16 @@ using Dates
 using LRUCache
 
 export AbstractIndividual, AbstractInteractionDistanceMetric,
-       AbstractFitnessEstimator, AbstractMatchupSampler,
+       AbstractFitnessEstimator, AbstractMatchupSelector,
        AsexualPhylogeneticTree, InteractionCache, AdditiveInteractionDistanceMetric,
        Population, Experiment, Id, InteractionOutcome, Distance,
        PhylogeneticFitnessEstimator, AdditiveInteractionDistanceMetric,
-       FitnessProportionateSelection, LexicaseSelection
+       FitnessProportionateSelection, LexicaseSelection, DualInteractionMatrix
 
 abstract type AbstractIndividual end
 abstract type AbstractInteractionDistanceMetric end
 abstract type AbstractFitnessEstimator end
-abstract type AbstractMatchupSampler end
+abstract type AbstractMatchupSelector end
 abstract type AbstractSelectionMethod end
 abstract type AbstractPhylogeneticTree end
 
@@ -22,7 +22,7 @@ MatchUp = NTuple{NumPops,Id} where NumPops
 InteractionCache = LRU{MatchUp{NumPops}, InteractionOutcome} where NumPops
 
 struct AdditiveInteractionDistanceMetric <: AbstractInteractionDistanceMetric end
-struct AllVersusAllMatchupSampler <: AbstractMatchupSampler end
+struct AllVersusAllMatchupSelector <: AbstractMatchupSelector end
 struct PhylogeneticFitnessEstimator <: AbstractFitnessEstimator end
 struct FitnessProportionateSelection <: AbstractSelectionMethod end
 struct LexicaseSelection <: AbstractSelectionMethod end
@@ -48,7 +48,7 @@ end
     pop_size::Int
     populations::Vector{Population{IndType}}=Vector{Population{IndType}}()
     interaction_cache::InteractionCache{NumPops}=InteractionCache{NumPops}(maxsize=2000)
-    matchup_sampler::AbstractMatchupSampler
+    matchup_selector::AbstractMatchupSelector
     interaction_distance_metric::AbstractInteractionDistanceMetric
     fitness_estimator::AbstractFitnessEstimator
     selection_method::AbstractSelectionMethod

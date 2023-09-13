@@ -1,5 +1,5 @@
-export AllVersusAllMatchupSampler
-function (::AllVersusAllMatchupSampler)(ex::Experiment)
+export AllVersusAllMatchupSelector
+function (::AllVersusAllMatchupSelector)(ex::Experiment)
     @assert length(ex.populations) == 2
     matchups = Vector{MatchUp}()
     for id1 in keys(ex.populations[1].individuals)

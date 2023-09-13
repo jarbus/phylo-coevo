@@ -14,7 +14,7 @@ end
 
 function run_generation!(ex::Experiment)
     # Choose matchups
-    matchups = ex.matchup_sampler(ex)
+    matchups = ex.matchup_selector(ex)
     # Evaluate
     evaluate!(ex, matchups)
     # Estimate remaining interactions

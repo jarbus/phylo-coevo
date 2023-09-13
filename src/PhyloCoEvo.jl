@@ -2,7 +2,8 @@ module PhyloCoEvo
 
 include("structs.jl")
 include("distances.jl")
-include("samplers.jl")
+include("selectors.jl")
+include("estimators.jl")
 
 include("domains/ng.jl")
 include("population.jl")
